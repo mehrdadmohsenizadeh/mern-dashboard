@@ -22,21 +22,24 @@
   <li>Install the necessary dependencies:</li>
 </ol>
 
-<pre><code class="language-javascript">npm install react react-router-dom flowbite-react
-</code></pre>
+```javascript
+npm install react react-router-dom flowbite-react
+```
 
 <ol start="2">
   <li>Import the Header component into your application:</li>
 </ol>
 
-<pre><code class="language-javascript">import Header from './Header';
-</code></pre>
+```javascript
+import Header from './Header';
+```
 
 <ol start="3">
   <li>Include the Header component in your application's layout:</li>
 </ol>
 
-<pre><code class="language-javascript">function App() {
+```javascript
+function App() {
     return (
         &lt;div className="App"&gt;
             &lt;Header /&gt;
@@ -44,7 +47,7 @@
         &lt;/div&gt;
     );
 }
-</code></pre>
+```
 
 <ol start="4">
   <li>Customize the Header component as needed, adjusting styling, links, and functionality to match your blog's requirements.</li>
