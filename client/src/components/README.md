@@ -31,7 +31,7 @@ npm install react react-router-dom flowbite-react
 </ol>
 
 ```javascript
-import Header from './Header';
+import Header from './components/Header';
 ```
 
 <ol start="3">
@@ -39,12 +39,12 @@ import Header from './Header';
 </ol>
 
 ```javascript
-function App() {
+export default function App() {
     return (
-        <div className="App">;
+        <BrowserRouter>;
             <Header />;
             {/* Other components and content */}
-        </div>;
+        </BrowserRouter>;
     );
 }
 ```
