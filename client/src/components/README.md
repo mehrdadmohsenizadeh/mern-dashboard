@@ -41,10 +41,10 @@ import Header from './Header';
 ```javascript
 function App() {
     return (
-        &lt;div className="App"&gt;
-            &lt;Header /&gt;
+        <div className="App">;
+            <Header />;
             {/* Other components and content */}
-        &lt;/div&gt;
+        </div>;
     );
 }
 ```
