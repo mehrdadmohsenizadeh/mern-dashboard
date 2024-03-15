@@ -5,7 +5,10 @@ import dotenv from 'dotenv';
 import express from 'express'; 
 
 // Import the Mongoose library for MongoDB object modeling
-import mongoose from 'mongoose'; 
+import mongoose from 'mongoose';
+
+// 
+import userRoutes from './routes/user.route.js';
 //--------------------------------------------------
 // Load environment variables from a .env file into process.env
 dotenv.config();
@@ -32,3 +35,10 @@ app.listen(3000, () => {
     // Log message when the server starts listening on port 3000
     console.log('Server is running on port 3000!'); 
 });
+
+//
+app.use(
+      '/api/user'
+    , userRoutes
+)
+
