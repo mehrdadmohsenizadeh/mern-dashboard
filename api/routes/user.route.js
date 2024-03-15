@@ -13,6 +13,5 @@ router.get(
     , test    // Controller function to handle the request
 );
 //--------------------------------------------------
-// Export the router to make it accessible for use in
-// other parts of the application
+// Export the router to make it accessible for use in other parts of the application
 export default router;
