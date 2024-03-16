@@ -2,6 +2,7 @@
 import express from 'express'
 
 // Import the 'signup' controller function from the 'auth.controller.js' file
+// NOTE: DO NOT FORGET TO ADD THE FILE EXTENSION '.JS' 
 import { signup } from '../controllers/auth.controller.js'
 //--------------------------------------------------
 // Define a route for handling POST requests to '/signup'
