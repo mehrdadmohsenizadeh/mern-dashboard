@@ -95,14 +95,14 @@ export const signup = async(req, res, next) => {
         ));
     }
 
-    // Check for sequential characters (e.g., '12345678')
-    const sequentialRegex = /(123|234|345|456|567|678|789|890|abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz)/i;
-    if (sequentialRegex.test(password)) {
-        next(errorHandler(
-              400
-            , 'Password cannot contain sequential characters.'
-        ));
-    }
+    // // Check for sequential characters (e.g., '12345678')
+    // const sequentialRegex = /(123|234|345|456|567|678|789|890|abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz)/i;
+    // if (sequentialRegex.test(password)) {
+    //     next(errorHandler(
+    //           400
+    //         , 'Password cannot contain sequential characters.'
+    //     ));
+    // }
 
     // Evaluate password strength using zxcvbn
     const passwordStrength = zxcvbn(password);

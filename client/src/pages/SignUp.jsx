@@ -1,16 +1,24 @@
 import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-// import { FiEye, FiEyeOff } from 'react-icons/fi'; // Import eye icons
+import { FiEye, FiEyeOff } from 'react-icons/fi'; // Import eye icons
+import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
+import { RiLock2Fill } from "react-icons/ri";
+
 
 export default function SignUp() {
-  // const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState(null);
 
   const [loading, setLoading] = useState(false);
 
-  const [formData, setFormData] = useState({});
+  // const [formData, setFormData] = useState({});
+
+  const [formData, setFormData] = useState({
+    confirmPassword: '',
+  });  
 
   const navigate = useNavigate();
  
@@ -19,13 +27,24 @@ export default function SignUp() {
   };
 
   const handleSubmit = async (e) => {
+    
     e.preventDefault();
-    if (!formData.username || !formData.email || !formData.password) {
+    
+    // Check if all fields are filled
+    if (!formData.username || !formData.email || !formData.password || !formData.confirmPassword) {
       return setErrorMessage('Please fill out all fields.');
     }
+    
+    // Check if passwords match
+    if (formData.password !== formData.confirmPassword) {
+      return setErrorMessage('Passwords do not match.');
+    }
+    
     try {
       setLoading(true);
       setErrorMessage(null);
+
+      // Attempt to sign up the user
       const res = await fetch('/api/auth/signup', {
           method: 'POST'
         , headers: { 'Content-Type': 'application/json' }
@@ -33,16 +52,18 @@ export default function SignUp() {
       });
       const data = await res.json();
       if (data.success === false) {
-        return setErrorMessage(data.message);
-      }
-      setLoading(false);
-      if(res.ok) {
+        // If there's a failure (e.g., username already taken), stop the spinner and show error
+        setErrorMessage(data.message);
+      } else {
+        // If signup is successful, redirect the user
         navigate('/sign-in');
       }
     } catch (error) {
+      // If there's an exception during sign up, stop the spinner and show error
       setErrorMessage(error.message);
-      setLoading(false);
     }
+    // Stop the loading process regardless of the outcome
+    setLoading(false); 
   };
   return (
     <div className='
@@ -96,15 +117,11 @@ export default function SignUp() {
             >
               Mehrdad
             </span>
-            <span
-              style={{ paddingLeft: '3px' }}
-            >
+            <span style={{ paddingLeft: '3px' }}>
               Mohsenizadeh
             </span>
           </Link>
-          <p
-            className='text-sm mt-3'
-          >
+          <p className='text-sm mt-3'>
             Please sign up with your email and password or with your Google account.
           </p>
         </div>
@@ -113,45 +130,83 @@ export default function SignUp() {
         {/* -------------------------------------------------- */}
         <div className='flex-1'>
           <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
-          <div className='max-w-md'>
-              <Label
-                value='Username'
-              />
+            {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+            {/*                       USERNAME                     */}
+            {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+            <div className="max-w-md">
               <TextInput
+                id='username'
                 type='text'
                 placeholder='Username'
-                id='username'
                 onChange={handleChange}
-              />
+                icon={FaUser} />
             </div>
+            {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+            {/*                        EMAIL                       */}
+            {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
             <div className='max-w-md'>
-              <Label
-                value='Email'
-              />
               <TextInput
+                id='email'
                 type='email'
                 placeholder='j.doe@gmail.com'
-                id='email'
                 onChange={handleChange}
-              />
+                icon={FaEnvelope} />
             </div>
-            <div className='max-w-md'>
-              <Label
-                value='Password'
-              />
+            {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+            {/*                       PASSWORD                     */}
+            {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+            <div className='relative max-w-md'>
               <TextInput
-                type='password'
-                placeholder='Password'
                 id='password'
+                type={showPassword ? 'text' : 'password'}
+                placeholder='Password'
                 onChange={handleChange}
+                icon={RiLock2Fill}
               />
+              <div className='absolute inset-y-0 right-0 pr-3 flex items-center'>
+                {showPassword ? (
+                  <FiEyeOff
+                    className='cursor-pointer'
+                    onClick={() => setShowPassword(!showPassword)}
+                  />
+                ) : (
+                  <FiEye
+                    className='cursor-pointer'
+                    onClick={() => setShowPassword(!showPassword)}
+                  />
+                )}
+              </div>
             </div>
-            <Button
-              className='max-w-md'
-              gradientDuoTone='purpleToPink'
-              type='submit'
-              disabled={loading}
-            >
+            {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+            {/*                   CONFIRM PASSWORD                 */}
+            {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+            <div className='relative max-w-md'>
+              <TextInput 
+                id='confirmPassword' 
+                type={showConfirmPassword ? 'text' : 'password'} 
+                placeholder='Confirm Password' 
+                onChange={handleChange}
+                icon={RiLock2Fill}
+                onPaste={(e) => e.preventDefault()} // prevent pasting password
+              />
+              <div className='absolute inset-y-0 right-0 pr-3 flex items-center'>
+                {showConfirmPassword ? (
+                  <FiEyeOff
+                    className='cursor-pointer'
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  />
+                ) : (
+                  <FiEye
+                    className='cursor-pointer'
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  />
+                )}
+              </div>
+            </div>
+            {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+            {/*                       SIGN UP                      */}
+            {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+            <Button type='submit' className='max-w-md' gradientDuoTone='purpleToPink' disabled={loading} >
               {loading ? (
                 <>
                   <Spinner size='sm' />
@@ -162,17 +217,24 @@ export default function SignUp() {
               )}
             </Button>
           </form>
+          {/* -------------------------------------------------- */}
+          {/*                    HAVE ACCOUNT?                   */}
+          {/* -------------------------------------------------- */}
           <div className='flex gap-1 text-sm'>
-            <span>
-              Already have an account?
-            </span>
-            <Link
-              to='/sign-in'
-              className='text-blue-500'
-            >
-              Sign In
+            <span> Already have an account? </span>
+            <Link to='/sign-in' className='text-blue-500'> Sign In </Link>
+          </div>
+          {/* -------------------------------------------------- */}
+          {/*                   FORGOT PASSWORD?                 */}
+          {/* -------------------------------------------------- */}
+          <div className='flex gap-1 text-sm'>
+            <Link to='/forgot-password' className='text-blue-500'>
+              Forgot Password?
             </Link>
           </div>
+          {/* -------------------------------------------------- */}
+          {/*                    ERROR MESSAGE                   */}
+          {/* -------------------------------------------------- */}
           {errorMessage && (
             <Alert className='mt-5' color='failure'>
               {errorMessage}
@@ -183,3 +245,4 @@ export default function SignUp() {
     </div>
   );
 }
+
