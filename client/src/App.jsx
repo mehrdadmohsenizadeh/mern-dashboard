@@ -3,7 +3,10 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import Header from './components/Header'
+import Footer from './components/Footer'
 import ForgotPassword from './components/ForgotPassword';
+
+import './index.css';
 
 import Home from './pages/Home'
 import About from './pages/About'
@@ -25,6 +28,7 @@ export default function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   )
 }

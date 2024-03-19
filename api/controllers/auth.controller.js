@@ -37,7 +37,8 @@ export const signup = async(req, res, next) => {
         ));
     }
 
-    // Validate username format using regex (alphanumeric characters, underscores, and hyphens)
+    // Validate username format using regex:
+    // [a-zA-Z0-9_-]+ : Alphanumeric characters (a-zA-Z0-9), underscores (_), and hyphens (-)
     const usernameRegex = /^[a-zA-Z0-9_-]+$/;
     if (!usernameRegex.test(username)) {
         next(errorHandler(
@@ -57,7 +58,12 @@ export const signup = async(req, res, next) => {
     // +++++++++++++++++++++++++++++++++++++++++++++
     //                    EMAIL
     // +++++++++++++++++++++++++++++++++++++++++++++
-    // Validate email format using regex
+    // Validate email format using regex:
+    // [^\s@]+ : Starts with one or more characters that are not whitespace or "@"
+    // @       : Followed by "@" symbol.
+    // [^\s@]+ : Followed by one or more characters that are not whitespace or "@"
+    // \.      : Matches a literal dot "." character.
+    // [^\s@]+ : Ends with one or more characters that are not whitespace or "@"
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
         next(errorHandler(
@@ -78,15 +84,28 @@ export const signup = async(req, res, next) => {
     //                  PASSWORD
     // +++++++++++++++++++++++++++++++++++++++++++++
     // Enforce password complexity requirements
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-    if (!passwordRegex.test(password)) {
-        next(errorHandler(
-              400
-            , 'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.'
-        ));
-    }
+    // Define variables to track whether each condition has been met
+    const hasMinLength   = password.length >= 8;
+    const hasUppercase   = /[A-Z]/.test(password);
+    const hasLowercase   = /[a-z]/.test(password);
+    const hasDigit       = /\d/.test(password);
+    const hasSpecialChar = /[!@#$%^&*]/.test(password); // Add more special characters as needed
 
+    const errorMessageLines = [
+        "Password must meet the following criteria:",
+        `${hasMinLength   ? '✔️' : '❌'} Be at least 8 characters long`,
+        `${hasUppercase   ? '✔️' : '❌'} Contain at least one uppercase letter`,
+        `${hasLowercase   ? '✔️' : '❌'} Contain at least one lowercase letter`,
+        `${hasDigit       ? '✔️' : '❌'} Contain at least one digit`,
+        `${hasSpecialChar ? '✔️' : '❌'} Contain at least one special character`
+    ];
+    
+    const errorMessage = errorMessageLines.join('\n');
+
+    // Display the error message
+    next(errorHandler(400, errorMessage));
+    // ****************************************************
     // Check for repeated characters (e.g., 'Yeeera111!')
     if (/(\w)\1{2,}/.test(password)) {
         next(errorHandler(

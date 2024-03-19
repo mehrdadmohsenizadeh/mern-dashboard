@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Default icon color */
+.icon-wrapper-footer {
+    color: #757575; /* Gray color; adjust as needed */
+}
+
+/* Hover styles */
+.linkedin-icon:hover {
+    color: #0A66C2; /* LinkedIn Blue */
+}
+.github-icon:hover {
+    color: #171515; /* GitHub Black */
+}
+.youtube-icon:hover {
+    color: #FF0000; /* YouTube Red */
+}
+.facebook-icon:hover {
+    color: #1877F2; /* Facebook Blue */
+}
+.twitter-icon:hover {
+    color: #000000; /* TwitterX Black */
+}
+.instagram-icon:hover {
+    /* Instagram uses a gradient, which cannot be applied directly to text/icons in CSS. */
+    /* As an alternative, consider using a solid color or a custom SVG for the hover effect. */
+    color: #E1306C; /* Instagram Solid Color as an alternative */
+}
+
+/* Target links within the footer specifically, adjust the selector as needed */
+.footer-link-group a {
+    text-decoration: none; /* Removes underline */
+    transition: color 0.0001s ease-in-out, font-weight 0.001s ease-in-out; /* Smooth transition for color and font-weight */
+}
+
+.footer-link-group a:not(.footer-logo-link):hover {
+    text-decoration: none;
+    color: #6a0dad; /* Change to your preferred shade of purple */
+    font-weight: 400; /* Makes text bolder */
+}
+
+.footer-title {
+    font-weight: 700; /* Or use a numeric value like 600, 700, etc., depending on the desired boldness */
+}

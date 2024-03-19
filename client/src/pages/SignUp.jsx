@@ -1,31 +1,33 @@
 import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FiEye, FiEyeOff } from 'react-icons/fi'; // Import eye icons
-import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
+import { TbUserFilled } from "react-icons/tb";
+import { HiMiniEnvelope } from "react-icons/hi2";
 import { RiLock2Fill } from "react-icons/ri";
-
-
+import { FiEye, FiEyeOff } from 'react-icons/fi';
+// ==================================================
 export default function SignUp() {
-  const [showPassword, setShowPassword] = useState(false);
+  // -------------------------------------------------------
+  //                         CONST
+  // -------------------------------------------------------
+  const navigate                                      = useNavigate();
+  const [loading, setLoading]                         = useState(false);
+  const [formData, setFormData]                       = useState({confirmPassword: '',});  
+  const [errorMessage, setErrorMessage]               = useState(null) ;
+  const [showPassword, setShowPassword]               = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  const [errorMessage, setErrorMessage] = useState(null);
-
-  const [loading, setLoading] = useState(false);
-
-  // const [formData, setFormData] = useState({});
-
-  const [formData, setFormData] = useState({
-    confirmPassword: '',
-  });  
-
-  const navigate = useNavigate();
- 
+  // -------------------------------------------------------
+  //                     HANDLE CHANGE
+  // -------------------------------------------------------
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
+    setFormData({
+        ...formData
+      , [e.target.id]: e.target.value.trim()
+    });
   };
-
+  // -------------------------------------------------------
+  //                     HANDLE SUBMIT
+  // -------------------------------------------------------
   const handleSubmit = async (e) => {
     
     e.preventDefault();
@@ -91,7 +93,7 @@ export default function SignUp() {
         <div className='
           flex-1
           md:border-r-2
-          md:pr-6
+          md:pr-6 mb-24
           md:border-solid
           md:border-gray-200
           '
@@ -121,8 +123,8 @@ export default function SignUp() {
               Mohsenizadeh
             </span>
           </Link>
-          <p className='text-sm mt-3'>
-            Please sign up with your email and password or with your Google account.
+          <p className='text-sm mt-4'>
+            Please sign up with your email and password or with Google.
           </p>
         </div>
         {/* -------------------------------------------------- */}
@@ -139,7 +141,7 @@ export default function SignUp() {
                 type='text'
                 placeholder='Username'
                 onChange={handleChange}
-                icon={FaUser} />
+                icon={TbUserFilled} />
             </div>
             {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
             {/*                        EMAIL                       */}
@@ -148,9 +150,9 @@ export default function SignUp() {
               <TextInput
                 id='email'
                 type='email'
-                placeholder='j.doe@gmail.com'
+                placeholder='Email'
                 onChange={handleChange}
-                icon={FaEnvelope} />
+                icon={HiMiniEnvelope} />
             </div>
             {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
             {/*                       PASSWORD                     */}
@@ -216,7 +218,8 @@ export default function SignUp() {
                 'Sign Up'
               )}
             </Button>
-          </form>
+            {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+            </form>
           {/* -------------------------------------------------- */}
           {/*                    HAVE ACCOUNT?                   */}
           {/* -------------------------------------------------- */}
@@ -240,7 +243,8 @@ export default function SignUp() {
               {errorMessage}
             </Alert>
           )}
-        </div>
+          {/* -------------------------------------------------- */}
+          </div>
       </div>
     </div>
   );
