@@ -11,6 +11,8 @@ import bcryptjs from 'bcryptjs';
 
 // Import zxcvbn library into your signup controller to evaluate the password strength
 import zxcvbn from 'zxcvbn';
+
+import jwt from 'jsonwebtoken';
 //--------------------------------------------------
 export const signup = async(req, res, next) => {
     
@@ -94,11 +96,11 @@ export const signup = async(req, res, next) => {
 
     const errorMessageLines = [
         "Password must meet the following criteria:",
-        `${hasMinLength   ? '✔️' : '❌'} Be at least 8 characters long`,
-        `${hasUppercase   ? '✔️' : '❌'} Contain at least one uppercase letter`,
-        `${hasLowercase   ? '✔️' : '❌'} Contain at least one lowercase letter`,
-        `${hasDigit       ? '✔️' : '❌'} Contain at least one digit`,
-        `${hasSpecialChar ? '✔️' : '❌'} Contain at least one special character`
+          `${hasMinLength   ? '✔️' : '❌'} Be at least 8 characters long`
+        , `${hasUppercase   ? '✔️' : '❌'} Contain at least one uppercase letter`
+        , `${hasLowercase   ? '✔️' : '❌'} Contain at least one lowercase letter`
+        , `${hasDigit       ? '✔️' : '❌'} Contain at least one digit`
+        , `${hasSpecialChar ? '✔️' : '❌'} Contain at least one special character`
     ];
     
     const errorMessage = errorMessageLines.join('\n');
@@ -160,7 +162,72 @@ export const signup = async(req, res, next) => {
         next(error);
     }
 };
+// ==================================================
+// ==================================================
+// ==================================================
+// ==================================================
+// ==================================================
 
+// Path: api/controllers/auth.controller.js
+export const signin = async(req, res, next) => {
+    
+    // Extract the email and password from the request body
+    const { email, password } = req.body;
+
+    // Check if email and password are missing or empty (Input validation)
+    if (!email || !password || email === '' || password === '') {
+        next(errorHandler(
+              400
+            , 'Email and password are required.'
+        ));
+    }
+    
+    // Check if the user exists in the database
+    try {
+        // --------------------------------------------------
+        // Find the user with the specified email
+        const validUser = await User.findOne({ email });
+
+        if (!validUser) {
+            return next(errorHandler(
+                  400
+                , 'Invalid email or password.'
+            ));
+        }
+        // --------------------------------------------------
+        // Compare the password entered by the user with the hashed password stored in the database
+        const isPasswordValid = bcryptjs.compareSync(password, validUser.password);
+
+        if (!isPasswordValid) {
+            return next(errorHandler(
+                  400
+                , 'Invalid email or password.'
+            ));
+        }
+        // --------------------------------------------------
+        // Generate a JSON Web Token (JWT) for the user
+        const token = jwt.sign(
+                  { userId: validUser._id }
+                , process.env.JWT_SECRET
+                , { expiresIn: '1h' }
+        );
+
+        // Remove the password from the user object
+        const { password: pass, ...rest } = validUser._doc;
+            
+        // Send the JWT as a cookie in the HTTP response
+        res
+            .status(200)
+            .cookie(
+                'access_token'
+                , token
+                , { httpOnly: true }
+            )
+            .json({ rest });
+    } catch (error) {
+        next(error);
+    }
+};
 
 
 

@@ -29,6 +29,10 @@
     color: #E1306C; /* Instagram Solid Color as an alternative */
 }
 
+.portfolio-icon:hover {
+    color: #007BFF; /* Portfolio Blue */
+}
+
 /* Target links within the footer specifically, adjust the selector as needed */
 .footer-link-group a {
     text-decoration: none; /* Removes underline */

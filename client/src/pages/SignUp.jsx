@@ -19,6 +19,7 @@ export default function SignUp() {
   // -------------------------------------------------------
   //                     HANDLE CHANGE
   // -------------------------------------------------------
+  // Handle change in the input fields
   const handleChange = (e) => {
     setFormData({
         ...formData
@@ -26,8 +27,37 @@ export default function SignUp() {
     });
   };
   // -------------------------------------------------------
+  //                     HANDLE CLICK
+  // -------------------------------------------------------
+  // Prevent the default behavior of the anchor tag
+  const handleClick = (event) => {
+    event.preventDefault();
+  }
+  // -------------------------------------------------------
+  //                    PASSWORD TOGGLE
+  // -------------------------------------------------------
+  // Password toggle component
+  const PasswordToggle = ({ showPassword, setShowPassword }) => {
+    return (
+      <div className='absolute inset-y-0 right-0 pr-3 flex items-center'>
+        {showPassword ? (
+          <FiEyeOff
+            className='cursor-pointer'
+            onClick={() => setShowPassword(!showPassword)}
+          />
+        ) : (
+          <FiEye
+            className='cursor-pointer'
+            onClick={() => setShowPassword(!showPassword)}
+          />
+        )}
+      </div>
+    );
+  };
+  // -------------------------------------------------------
   //                     HANDLE SUBMIT
   // -------------------------------------------------------
+  // Handle form submission
   const handleSubmit = async (e) => {
     
     e.preventDefault();
@@ -67,6 +97,7 @@ export default function SignUp() {
     // Stop the loading process regardless of the outcome
     setLoading(false); 
   };
+  // -------------------------------------------------------
   return (
     <div className='
       min-h-screen
@@ -105,6 +136,8 @@ export default function SignUp() {
             dark:text-white
             text-4xl
             '
+            onClick={handleClick}
+            style={{ cursor: 'default' }}
           >
             <span className='
               px-2
@@ -136,28 +169,35 @@ export default function SignUp() {
             {/*                       USERNAME                     */}
             {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
             <div className="max-w-md">
+            
               <TextInput
                 id='username'
                 type='text'
                 placeholder='Username'
                 onChange={handleChange}
-                icon={TbUserFilled} />
+                icon={TbUserFilled}
+              />
+            
             </div>
             {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
             {/*                        EMAIL                       */}
             {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
             <div className='max-w-md'>
+              
               <TextInput
                 id='email'
                 type='email'
                 placeholder='Email'
                 onChange={handleChange}
-                icon={HiMiniEnvelope} />
+                icon={HiMiniEnvelope} 
+              />
+
             </div>
             {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
             {/*                       PASSWORD                     */}
             {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
             <div className='relative max-w-md'>
+              
               <TextInput
                 id='password'
                 type={showPassword ? 'text' : 'password'}
@@ -165,24 +205,18 @@ export default function SignUp() {
                 onChange={handleChange}
                 icon={RiLock2Fill}
               />
-              <div className='absolute inset-y-0 right-0 pr-3 flex items-center'>
-                {showPassword ? (
-                  <FiEyeOff
-                    className='cursor-pointer'
-                    onClick={() => setShowPassword(!showPassword)}
-                  />
-                ) : (
-                  <FiEye
-                    className='cursor-pointer'
-                    onClick={() => setShowPassword(!showPassword)}
-                  />
-                )}
-              </div>
+              
+              <PasswordToggle
+                showPassword={showPassword}
+                setShowPassword={setShowPassword}
+              />
+
             </div>
             {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
             {/*                   CONFIRM PASSWORD                 */}
             {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
             <div className='relative max-w-md'>
+              
               <TextInput 
                 id='confirmPassword' 
                 type={showConfirmPassword ? 'text' : 'password'} 
@@ -191,19 +225,11 @@ export default function SignUp() {
                 icon={RiLock2Fill}
                 onPaste={(e) => e.preventDefault()} // prevent pasting password
               />
-              <div className='absolute inset-y-0 right-0 pr-3 flex items-center'>
-                {showConfirmPassword ? (
-                  <FiEyeOff
-                    className='cursor-pointer'
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  />
-                ) : (
-                  <FiEye
-                    className='cursor-pointer'
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  />
-                )}
-              </div>
+              
+              <PasswordToggle
+                showPassword={showConfirmPassword}
+                setShowPassword={setShowConfirmPassword}
+              />
             </div>
             {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
             {/*                       SIGN UP                      */}

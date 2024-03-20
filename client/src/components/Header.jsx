@@ -4,6 +4,16 @@ import { Link, useLocation } from 'react-router-dom';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { BsFillMoonFill } from "react-icons/bs";
 
+const NavLink = ({ path, label }) => {
+    return (
+      <Navbar.Link active={path === '/'} as={'div'}>
+        <Link to={path}>
+          {label}
+        </Link>
+      </Navbar.Link>
+    );
+  };
+
 export default function Header() {
     const path = useLocation().pathname;
   return (
@@ -81,21 +91,10 @@ export default function Header() {
         {/*                 HOME/ABOUT/PROJECTS                */}
         {/* -------------------------------------------------- */}
         <Navbar.Collapse>
-            <Navbar.Link active={path === '/'} as={'div'}>
-                <Link to='/'>
-                    Home
-                </Link>
-            </Navbar.Link>
-            <Navbar.Link active={path === '/about'} as={'div'}>
-                <Link to='/about'>
-                    About
-                </Link>
-            </Navbar.Link>
-            <Navbar.Link active={path === '/projects'} as={'div'}>
-                <Link to='/projects'>
-                    Projects
-                </Link>
-            </Navbar.Link>
+            <NavLink path='/'         label='Home'     />
+            <NavLink path='/about'    label='About'    />
+            <NavLink path='/projects' label='Projects' />
+            <NavLink path='/papers'   label='Papers'   />
         </Navbar.Collapse>
         {/* -------------------------------------------------- */}
     </Navbar>

@@ -1,8 +1,87 @@
 import { Footer } from 'flowbite-react'
 import { Link } from 'react-router-dom'
-import { BsLinkedin, BsFacebook, BsInstagram, BsYoutube, BsGithub, BsTwitterX } from "react-icons/bs";
+import { BsLinkedin, BsGlobe, BsFacebook, BsInstagram, BsYoutube, BsGithub, BsTwitterX } from "react-icons/bs";
 import { GrInstagram } from "react-icons/gr";
+import { IoNewspaperOutline } from "react-icons/io5";
+// ================================================== //
+// Define your links as variables
+const links = {
+      about          : "/about"
+    , facebook       : "https://www.facebook.com"
+    , github         : "https://github.com/mehrdadmohsenizadeh"
+    , home           : "/home"
+    , instagram      : "https://www.instagram.com"
+    , linkedin       : "https://www.linkedin.com/in/mehrdad-mohsenizadeh"
+    , newsletter     : "/newsletter"
+    , papers         : "/papers"
+    , portfolio      : "https://www.mehrdadmohsenizadeh.com"
+    , privacyPolicy  : "/privacy-policy"
+    , projects       : "/projects"
+    , recentPosts    : "/recent-posts"
+    , rssFeed        : "/rss-feed"
+    , termsOfService : "/terms-of-service"
+    , youtube        : "https://www.youtube.com"
+};
+// -------------------------------------------------- //
+/**
+ * Generates an array of Footer.Link components based on the provided links object.
+ * Each link is represented by a Footer.Link component with attributes such as href, target, and rel.
+ *
+ * @param {object} links - An object containing key-value pairs where keys represent link text and values represent link URLs.
+ * @returns {Array} An array of Footer.Link components.
+ */
+const createFooterLinks = (links) => {
 
+    // Convert the links object into an array of key-value pairs and map over them
+    return Object.entries(links).map(([key, value]) => (
+        
+        // For each entry in the links array, create a Footer.Link component
+        <Footer.Link
+            key={key}                 // Use the key as the unique identifier for each link
+            href={value}              // Use the value as the URL for the link
+            target="_blank"           // Open the link in a new tab/window
+            rel='noopener noreferrer' // Recommended security attributes for external links
+        >
+            {key}
+        </Footer.Link>
+    ));
+};
+// -------------------------------------------------- //
+/**
+ * Generates a Footer section for a specific link group.
+ *
+ * @param {string} title - The title of the link group.
+ * @param {object} links - An object containing key-value pairs where keys represent link text and values represent link URLs.
+ * @returns {JSX.Element} A JSX element representing the Footer section for the link group.
+ */
+const generateFooterSection = (title, links) => {
+    return (
+        <div>
+            <Footer.Title title={title} className='footer-title' />
+            <Footer.LinkGroup col>
+                {createFooterLinks(links)}
+            </Footer.LinkGroup>
+        </div>
+    );
+};
+// -------------------------------------------------- //
+/**
+ * Function to create an icon link.
+ * @param {string} link - The name of the link, used to fetch the URL from the 'links' object.
+ * @param {React.Component} IconComponent - The icon component to be rendered.
+ * @param {number} [iconSize=24] - The size of the icon (default: 24).
+ * @returns {JSX.Element} - The JSX element representing the icon link.
+ */
+const createIconLink = (link, IconComponent, iconSize = 24) => {
+    return (
+        <span className={`icon-wrapper-footer ${link}-icon`}>
+            <a href={links[link]} target="_blank" rel="noopener noreferrer">
+                <IconComponent size={iconSize} />
+            </a>
+        </span>
+    );
+};
+// ================================================== //
 export default function FooterCom() {
     return(
         <Footer
@@ -14,6 +93,9 @@ export default function FooterCom() {
         >
             <div className='w-full max-w-7xl mx-auto'>
                 <div className='grid w-full justify-between sm:flex md:grid-cols-1 footer-link-group'>
+                    {/* ================================================== */}
+                    {/*                       LOGO                         */}
+                    {/* ================================================== */}
                     <div className='mt-5 pr-5'>
                         <Link
                             to="/"
@@ -45,144 +127,78 @@ export default function FooterCom() {
                             </span>
                         </Link>                        
                     </div>
-                    <div className='grid grid-cols-2 gap-8 mt-4 sm:grid-cols-4 sm:gap-4'>
-                        {/* -------------------------------------------------- */}
-                        {/*                       ABOUT                        */}
-                        {/* -------------------------------------------------- */}
+                    {/* ================================================== */}
+                    {/*                       LINKS                        */}
+                    {/* ================================================== */}
+                    <div className='
+                        grid
+                        grid-cols-2
+                        gap-8
+                        mt-4
+                        sm:grid-cols-4
+                        sm:gap-4
+                        '
+                    >
+                        {/* ----------------------------------------------- */}
+                        {/*                    SITE MAP                     */}
+                        {/* ----------------------------------------------- */}
                         <div>
-                            <Footer.Title title='About' className='footer-title' />
-                            <Footer.LinkGroup col>
-                                <Footer.Link
-                                    href="https://www.mehrdad-mohsenizadeh.com"
-                                    target="_blank"
-                                    rel='noopener noreferrer'
-                                >
-                                    Portfolio
-                                </Footer.Link>
-                                <Footer.Link
-                                    href="/about"
-                                    target="_blank"
-                                    rel='noopener noreferrer'
-                                >
-                                    Blog
-                                </Footer.Link>
-                            </Footer.LinkGroup>
+                            {generateFooterSection('Site Map', {
+                                    'Home'         : links.home
+                                  , 'About'        : links.about
+                                  , 'Projects'     : links.projects
+                                  , 'Recent Posts' : links.recentPosts
+                                  , 'Papers'       : links.papers
+                                })}
                         </div>
-                        {/* -------------------------------------------------- */}
-                        {/*                     FOLLOW US                      */}
-                        {/* -------------------------------------------------- */}
+                        {/* ----------------------------------------------- */}
+                        {/*                    FOLLOW US                    */}
+                        {/* ----------------------------------------------- */}
                         <div>
-                            <Footer.Title title='Follow Us' className='footer-title' />
-                            <Footer.LinkGroup col>
-                                <Footer.Link
-                                    href="https://github.com/mehrdadmohsenizadeh/"
-                                    target="_blank"
-                                    rel='noopener noreferrer'
-                                >
-                                    GitHub
-                                </Footer.Link>
-                                <Footer.Link
-                                    href="https://www.youtube.com"
-                                    target="_blank"
-                                    rel='noopener noreferrer'
-                                >
-                                    YouTube
-                                </Footer.Link>
-                            </Footer.LinkGroup>
+                            {generateFooterSection('Follow Us', {
+                                  'LinkedIn'   : links.linkedin
+                                , 'GitHub'     : links.github
+                                , 'Portfolio'  : links.portfolio
+                                , 'YouTube'    : links.youtube
+                                , 'Instagram'  : links.instagram
+                            })}
                         </div>
-                        {/* -------------------------------------------------- */}
-                        {/*                      CONTACT                       */}
-                        {/* -------------------------------------------------- */}
+                        {/* ----------------------------------------------- */}
+                        {/*                    SUBSCRIBE                    */}
+                        {/* ----------------------------------------------- */}
                         <div>
-                            <Footer.Title title='Contact' className='footer-title' />
-                            <Footer.LinkGroup col>
-                            <Footer.Link
-                                    href="https://www.linkedin.com/in/mehrdad-mohsenizadeh/"
-                                    target="_blank"
-                                    rel='noopener noreferrer'
-                                >
-                                    LinkedIn
-                                </Footer.Link>
-                                <Footer.Link
-                                    href="https://www.instagram.com"
-                                >
-                                    Instagram
-                                </Footer.Link>
-                                <Footer.Link
-                                    href="https://www.facebook.com"
-                                >
-                                    Facebook
-                                </Footer.Link>
-                                <Footer.Link
-                                    href="https://www.twitter.com"
-                                    target="_blank"
-                                    rel='noopener noreferrer'
-                                >
-                                    Twitter
-                                </Footer.Link>
-                            </Footer.LinkGroup>
+                            {generateFooterSection('Subscribe', {
+                                    'Newsletter' : links.newsletter
+                                  , 'RSS Feed'   : '#'
+                                })}
                         </div>
-                        {/* -------------------------------------------------- */}
-                        {/*                       LEGAL                        */}
-                        {/* -------------------------------------------------- */}
+                        {/* ----------------------------------------------- */}
+                        {/*                      LEGAL                      */}
+                        {/* ----------------------------------------------- */}
                         <div>
-                            <Footer.Title title='Legal' className='footer-title' />
-                            <Footer.LinkGroup col>
-                                <Footer.Link
-                                    href="#"
-                                >
-                                    Privacy Policy
-                                </Footer.Link>
-                                <Footer.Link
-                                    href="#"
-                                >
-                                    Terms &amp; Conditions
-                                </Footer.Link>
-                            </Footer.LinkGroup>
-                        </div>                        
+                            {generateFooterSection('Legal', {
+                                  'Privacy Policy'   : '#'
+                                , 'Terms of Service' : '#'
+                            })}
+                        </div>
                     </div>
                 </div>
                 {/* ================================================== */}
-                {/*                       ICONS                        */}
+                {/*                 COPYRIGHT & ICONS                  */}
                 {/* ================================================== */}
                 <Footer.Divider />
                 <div className='w-full sm:flex sm:items-center sm:justify-between'>
                     <Footer.Copyright
                         href='/home'
-                        by="Mehrdad's Blog"
+                        by="Mehrdad Mohsenizadeh"
                         year={new Date().getFullYear()}
                     />
                     <div className='flex gap-6 sm:mt-0 mt-4 sm:justify-center'>
-                        <span className="icon-wrapper-footer linkedin-icon">
-                            <a href="https://www.linkedin.com/in/mehrdad-mohsenizadeh" target="_blank" rel="noopener noreferrer">
-                                <BsLinkedin size={24} />
-                            </a>
-                        </span>
-                        <span className="icon-wrapper-footer github-icon">
-                            <a href="https://github.com/mehrdadmohsenizadeh" target="_blank" rel="noopener noreferrer">
-                                <BsGithub size={24} />
-                            </a>
-                        </span>
-                        <span className="icon-wrapper-footer youtube-icon">
-                            <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">
-                                <BsYoutube size={28} />
-                            </a>
-                        </span>
-                        <span className="icon-wrapper-footer facebook-icon">
-                            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
-                                <BsFacebook size={24} />
-                            </a>
-                        </span>
-                        <span className="icon-wrapper-footer instagram-icon">
-                            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-                                <GrInstagram size={24} />
-                            </a>
-                        </span>
-                        <span className="icon-wrapper-footer twitter-icon">
-                            <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
-                                <BsTwitterX size={24} />
-                            </a>
-                        </span>
+                        {createIconLink("linkedin"  , BsLinkedin)}
+                        {createIconLink("github"    , BsGithub)}
+                        {createIconLink("portfolio" , BsGlobe)}
+                        {createIconLink("youtube"   , BsYoutube)}
+                        {createIconLink("instagram" , GrInstagram)}
                     </div>
                 </div>
             </div>
