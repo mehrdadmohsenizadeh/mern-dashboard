@@ -84,10 +84,10 @@ export default function SignUp() {
       });
       const data = await res.json();
       if (data.success === false) {
-        // If there's a failure (e.g., username already taken), stop the spinner and show error
+        // If there's a failure (e.g., invalid email), stop the spinner and show error
         setErrorMessage(data.message);
       } else {
-        // If signup is successful, redirect the user
+        // If signup is successful, redirect the user to Sign In page
         navigate('/sign-in');
       }
     } catch (error) {
@@ -169,7 +169,6 @@ export default function SignUp() {
             {/*                       USERNAME                     */}
             {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
             <div className="max-w-md">
-            
               <TextInput
                 id='username'
                 type='text'
@@ -177,13 +176,11 @@ export default function SignUp() {
                 onChange={handleChange}
                 icon={TbUserFilled}
               />
-            
             </div>
             {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
             {/*                        EMAIL                       */}
             {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
             <div className='max-w-md'>
-              
               <TextInput
                 id='email'
                 type='email'
@@ -191,13 +188,11 @@ export default function SignUp() {
                 onChange={handleChange}
                 icon={HiMiniEnvelope} 
               />
-
             </div>
             {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
             {/*                       PASSWORD                     */}
             {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
             <div className='relative max-w-md'>
-              
               <TextInput
                 id='password'
                 type={showPassword ? 'text' : 'password'}
@@ -205,18 +200,15 @@ export default function SignUp() {
                 onChange={handleChange}
                 icon={RiLock2Fill}
               />
-              
               <PasswordToggle
                 showPassword={showPassword}
                 setShowPassword={setShowPassword}
               />
-
             </div>
             {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
             {/*                   CONFIRM PASSWORD                 */}
             {/* ++++++++++++++++++++++++++++++++++++++++++++++++++ */}
             <div className='relative max-w-md'>
-              
               <TextInput 
                 id='confirmPassword' 
                 type={showConfirmPassword ? 'text' : 'password'} 
@@ -225,7 +217,6 @@ export default function SignUp() {
                 icon={RiLock2Fill}
                 onPaste={(e) => e.preventDefault()} // prevent pasting password
               />
-              
               <PasswordToggle
                 showPassword={showConfirmPassword}
                 setShowPassword={setShowConfirmPassword}
@@ -252,14 +243,6 @@ export default function SignUp() {
           <div className='flex gap-1 text-sm'>
             <span> Already have an account? </span>
             <Link to='/sign-in' className='text-blue-500'> Sign In </Link>
-          </div>
-          {/* -------------------------------------------------- */}
-          {/*                   FORGOT PASSWORD?                 */}
-          {/* -------------------------------------------------- */}
-          <div className='flex gap-1 text-sm'>
-            <Link to='/forgot-password' className='text-blue-500'>
-              Forgot Password?
-            </Link>
           </div>
           {/* -------------------------------------------------- */}
           {/*                    ERROR MESSAGE                   */}

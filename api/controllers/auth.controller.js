@@ -94,19 +94,18 @@ export const signup = async(req, res, next) => {
     const hasDigit       = /\d/.test(password);
     const hasSpecialChar = /[!@#$%^&*]/.test(password); // Add more special characters as needed
 
-    const errorMessageLines = [
-        "Password must meet the following criteria:",
-          `${hasMinLength   ? '✔️' : '❌'} Be at least 8 characters long`
-        , `${hasUppercase   ? '✔️' : '❌'} Contain at least one uppercase letter`
-        , `${hasLowercase   ? '✔️' : '❌'} Contain at least one lowercase letter`
-        , `${hasDigit       ? '✔️' : '❌'} Contain at least one digit`
-        , `${hasSpecialChar ? '✔️' : '❌'} Contain at least one special character`
-    ];
-    
-    const errorMessage = errorMessageLines.join('\n');
-
-    // Display the error message
-    next(errorHandler(400, errorMessage));
+    // Display the error message if password requirements are not met
+    if (!hasMinLength || !hasUppercase || !hasLowercase || !hasDigit || !hasSpecialChar) {
+        const errorMessage = [
+              "Password must meet the following criteria:"
+            , `${hasMinLength   ? '✔️' : '❌'} Be at least 8 characters long`
+            , `${hasUppercase   ? '✔️' : '❌'} Contain at least one uppercase letter`
+            , `${hasLowercase   ? '✔️' : '❌'} Contain at least one lowercase letter`
+            , `${hasDigit       ? '✔️' : '❌'} Contain at least one digit`
+            , `${hasSpecialChar ? '✔️' : '❌'} Contain at least one special character`
+        ];
+        return next(errorHandler(400, errorMessage));
+    }
     // ****************************************************
     // Check for repeated characters (e.g., 'Yeeera111!')
     if (/(\w)\1{2,}/.test(password)) {
@@ -161,7 +160,7 @@ export const signup = async(req, res, next) => {
     catch (error) {
         next(error);
     }
-};
+}
 // ==================================================
 // ==================================================
 // ==================================================
