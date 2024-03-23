@@ -18,6 +18,10 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.1",
     "nodemon": "^3.1.0",
+    "react-copy-to-clipboard": "^5.1.0",
+    "react-syntax-highlighter": "^15.5.0",
+    "react-toastify": "^10.0.5",
+    "styled-components": "^6.1.8",
     "zxcvbn": "^4.4.2"
   }
 }

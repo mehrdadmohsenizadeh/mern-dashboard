@@ -2,11 +2,10 @@ import React from 'react'
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
+import './index.css';
+
 import Header from './components/Header'
 import Footer from './components/Footer'
-import ForgotPassword from './components/ForgotPassword';
-
-import './index.css';
 
 import Home from './pages/Home'
 import About from './pages/About'
@@ -15,6 +14,7 @@ import SignUp from './pages/SignUp'
 import Papers from './pages/Papers'
 import Projects from './pages/Projects'
 import Dashboard from './pages/Dashboard'
+import ForgotPassword from './pages/ForgotPassword'
 
 export default function App() {
   return (

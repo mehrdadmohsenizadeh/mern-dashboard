@@ -1,10 +1,17 @@
 import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react';
+
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { TbUserFilled } from "react-icons/tb";
 import { HiMiniEnvelope } from "react-icons/hi2";
 import { RiLock2Fill } from "react-icons/ri";
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+// ==================================================
+{/*
+TO TEST THE SIGN UP PAGE, YOU MUST RUN "npm run dev" TWICE IN TWO SEPARATE TERMINALS:
+1. The server (http://localhost:3000/api/user/test) from the root folder
+2. The client (http://localhost:5173/sign-up) from the /client folder
+*/}
 // ==================================================
 export default function SignUp() {
   // -------------------------------------------------------
@@ -87,7 +94,7 @@ export default function SignUp() {
         // If there's a failure (e.g., invalid email), stop the spinner and show error
         setErrorMessage(data.message);
       } else {
-        // If signup is successful, redirect the user to Sign In page
+        // If signup is successful, show a success toast and redirect user to Sign In page
         navigate('/sign-in');
       }
     } catch (error) {
@@ -241,8 +248,12 @@ export default function SignUp() {
           {/*                    HAVE ACCOUNT?                   */}
           {/* -------------------------------------------------- */}
           <div className='flex gap-1 text-sm'>
-            <span> Already have an account? </span>
-            <Link to='/sign-in' className='text-blue-500'> Sign In </Link>
+            <span>
+              Already have an account?
+            </span>
+            <Link to='/sign-in' className='text-blue-500'>
+              Sign In
+            </Link>
           </div>
           {/* -------------------------------------------------- */}
           {/*                    ERROR MESSAGE                   */}

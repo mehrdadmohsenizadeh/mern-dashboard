@@ -5,6 +5,12 @@ import { HiMiniEnvelope } from "react-icons/hi2";
 import { RiLock2Fill } from "react-icons/ri";
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 // ==================================================
+{/*
+TO TEST THE SIGN IN PAGE, YOU MUST RUN "npm run dev" TWICE IN TWO SEPARATE TERMINALS:
+1. The server (http://localhost:3000/api/user/test) from the root folder
+2. The client (http://localhost:5173/sign-in) from the /client folder
+*/}
+// ==================================================
 export default function SignIn() {
   // -------------------------------------------------------
   //                         CONST

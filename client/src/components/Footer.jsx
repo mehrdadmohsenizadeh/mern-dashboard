@@ -187,18 +187,20 @@ export default function FooterCom() {
                 {/*                 COPYRIGHT & ICONS                  */}
                 {/* ================================================== */}
                 <Footer.Divider />
-                <div className='w-full sm:flex sm:items-center sm:justify-between'>
-                    <Footer.Copyright
-                        href='/home'
-                        by="Mehrdad Mohsenizadeh"
-                        year={new Date().getFullYear()}
-                    />
-                    <div className='flex gap-6 sm:mt-0 mt-4 sm:justify-center'>
+                <div className='w-full flex flex-col items-center justify-center'>
+                    <div className='flex items-center gap-6 mt-4'>
                         {createIconLink("linkedin"  , BsLinkedin)}
                         {createIconLink("github"    , BsGithub)}
                         {createIconLink("portfolio" , BsGlobe)}
                         {createIconLink("youtube"   , BsYoutube)}
                         {createIconLink("instagram" , GrInstagram)}
+                    </div>
+                    <div className="mt-6 text-center">
+                        <Footer.Copyright
+                            href='/home'
+                            by="Mehrdad Mohsenizadeh"
+                            year={new Date().getFullYear()}
+                        />
                     </div>
                 </div>
             </div>
